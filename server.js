@@ -84,4 +84,7 @@ userService(app);
 
 require('./services/section.service.server')(app);
 
+var bookService = require('./services/book.service.server');
+bookService(app);
+
 app.listen(4000);
