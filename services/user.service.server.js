@@ -8,11 +8,40 @@ module.exports = function(app){
     app.put('/api/profile',updateProfile)
     app.post('/api/logout',logout)
     app.post('/api/login',login)
+    app.get('/api/testuser/follow',findFollowingReaders)
+    app.get('/api/testuser/followedby',findFollowedByReaders)
     app.post('/api/user/follow/:userId',followUser)
+
+
 
     var userModel = require('../models/user/user.model.server')
     var followModel = require('../models/follow/follow.model.server')
 
+
+    function findFollowedByReaders(req, res) {
+        var user = req.session['currentUser'];
+        console.log('abee current user');
+
+        console.log(user._id);
+
+        followModel.findFollowedByReaders(user._id)
+            .then(function (fol) {
+                res.json(fol);
+            })
+    }
+
+
+    function findFollowingReaders(req, res) {
+        var user = req.session['currentUser'];
+        console.log('abee current user');
+
+        console.log(user._id);
+
+        followModel.findFollowingReaders(user._id)
+            .then(function (fol) {
+                res.json(fol);
+            })
+    }
 
     function logout(req, res) {
 
@@ -64,6 +93,9 @@ module.exports = function(app){
                 res.json(fol);
             })
     }
+
+
+
     
     function profile(req, res) {
         console.log('profile');
