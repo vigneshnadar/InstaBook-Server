@@ -6,6 +6,8 @@
 module.exports = function(app){
 
     app.post('/api/book',createBook)
+    app.post('/api/book/:bookId/bookmark',bookmarkUserInBook)
+    // app.post('/api/section/:sectionId/enrollment',enrollStudentInSection)
 
 
 
@@ -26,6 +28,25 @@ module.exports = function(app){
                 // req.session['currentUser']= user;
                 res.json(book);
             })
+    }
+
+
+    function bookmarkUserInBook(req, res) {
+        var bookId = req.params['bookId'];
+        var currentUser =   req.session.currentUser;
+        console.log('currentUser');
+        console.log(currentUser);
+        var userId = currentUser._id;
+        var bookmark = {
+            reader : userId,
+            book : bookId
+        };
+
+        return  bookmarkModel
+            .bookmarkUserInBook(bookmark)
+            .then(function (bookmark) {
+                res.json(bookmark);
+            });
     }
 
 

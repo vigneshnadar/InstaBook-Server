@@ -1,15 +1,14 @@
 var mongoose = require('mongoose');
 
 var bookmarkSchema = mongoose.Schema({
-    section: {
+    book: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'SectionModel'
+        ref: 'BookModel'
     },
-    student: {
+    reader: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'UserModel'
-    },
-    grade: String
+    }
 }, {
     collection: 'bookmark'
 })
