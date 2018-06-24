@@ -9,6 +9,8 @@ module.exports = function(app){
     app.post('/api/book/:bookId/bookmark',bookmarkUserInBook)
     app.get('/api/reader/book', findBooksForReader)
     app.get('/api/book/author', findBookByAuthor)
+    app.get('/api/book/:bookId/review', findReviewsForBook)
+    app.post('/api/:bookId/review', addReview)
 
     // app.post('/api/section/:sectionId/enrollment',enrollStudentInSection)
 
@@ -16,6 +18,7 @@ module.exports = function(app){
 
     var bookModel = require('../models/book/book.model.server')
     var bookmarkModel = require('../models/bookmark/bookmark.model.server')
+    var reviewModel = require('../models/review/review.model.server')
 
 
 
@@ -78,6 +81,38 @@ module.exports = function(app){
             .findBookByAuthor(userId)
             .then(function (books) {
                 res.json(books);
+            });
+    }
+
+
+    function findReviewsForBook(req, res) {
+        var bookId = req.params['bookId'];
+
+        return  reviewModel
+            .findReviewsForBook(bookId)
+            .then(function (rev) {
+                res.json(rev);
+            });
+    }
+
+
+    function addReview(req, res) {
+        var bookId = req.params['bookId'];
+        var currentUser =   req.session.currentUser;
+        var r = req.body;
+        // console.log('currentUser');
+        // console.log(currentUser);
+        var userId = currentUser._id;
+        var review = {
+            reader : userId,
+            book : bookId,
+            review: r.review
+        };
+
+        return  reviewModel
+            .addReview(review)
+            .then(function (rev) {
+                res.json(rev);
             });
     }
 
