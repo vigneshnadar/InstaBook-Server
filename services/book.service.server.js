@@ -7,6 +7,7 @@ module.exports = function(app){
 
     app.post('/api/book',createBook)
     app.post('/api/book/:bookId/bookmark',bookmarkUserInBook)
+    app.get('/api/reader/book', findBooksForReader)
     // app.post('/api/section/:sectionId/enrollment',enrollStudentInSection)
 
 
@@ -47,6 +48,19 @@ module.exports = function(app){
             .then(function (bookmark) {
                 res.json(bookmark);
             });
+    }
+
+
+    function findBooksForReader(req, res) {
+        var currentUser = req.session['currentUser'];
+        var readerId = currentUser._id;
+        bookmarkModel.findBooksForReader(readerId)
+            .then(function (books) {
+                console.log('bk');
+                console.log(books);
+                res.json(books);
+            })
+
     }
 
 

@@ -12,12 +12,13 @@ function bookmarkUserInBook(bookmark) {
     return bookmarkModel.create(bookmark);
 }
 
-// function findSectionsForStudent(studentId) {
-//     return enrollmentModel
-//         .find({student: studentId})
-//         .populate('section')
-//         .exec();
-// }
+function findBooksForReader(readerId) {
+
+    return bookmarkModel
+        .find({reader: readerId})
+        .populate('book')
+        .exec();
+}
 //
 //
 //
@@ -33,7 +34,8 @@ function bookmarkUserInBook(bookmark) {
 //
 //
 var api ={
-    bookmarkUserInBook: bookmarkUserInBook
+    bookmarkUserInBook: bookmarkUserInBook,
+    findBooksForReader: findBooksForReader
     // enrollStudentInSection: enrollStudentInSection,
     // findSectionsForStudent: findSectionsForStudent,
     // unenrollStudentInSection: unenrollStudentInSection,
