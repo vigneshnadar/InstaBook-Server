@@ -8,6 +8,8 @@ module.exports = function(app){
     app.post('/api/book',createBook)
     app.post('/api/book/:bookId/bookmark',bookmarkUserInBook)
     app.get('/api/reader/book', findBooksForReader)
+    app.get('/api/book/author', findBookByAuthor)
+
     // app.post('/api/section/:sectionId/enrollment',enrollStudentInSection)
 
 
@@ -61,6 +63,22 @@ module.exports = function(app){
                 res.json(books);
             })
 
+    }
+
+
+    function findBookByAuthor(req, res) {
+
+        var currentUser =   req.session.currentUser;
+        console.log('currentUser');
+        console.log(currentUser);
+        var userId = currentUser._id;
+
+
+        return  bookModel
+            .findBookByAuthor(userId)
+            .then(function (books) {
+                res.json(books);
+            });
     }
 
 

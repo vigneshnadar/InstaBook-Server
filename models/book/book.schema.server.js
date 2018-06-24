@@ -3,7 +3,11 @@ var mongoose = require('mongoose');
 var bookSchema = mongoose.Schema({
     name: String,
     description: String,
-    imageurl: String
+    imageurl: String,
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'UserModel'
+    }
 }, {
     collection: 'book'
 });

@@ -10,6 +10,14 @@ function createBook(book) {
 }
 
 
+function findBookByAuthor(authorId) {
+    console.log('find by ids');
+    // console.log(userModel.findOne({ _id :userId }));
+    return bookModel.find({ author :authorId })
+    // return userModel.findById(userId);
+}
+
+
 // function editSection(sectionId,section) {
 //     console.log(section);
 //     return sectionModel.update({
@@ -60,7 +68,8 @@ function createBook(book) {
 
 
 var api ={
-    createBook: createBook
+    createBook: createBook,
+    findBookByAuthor: findBookByAuthor
     // findSectionsForCourse: findSectionsForCourse,
     // decrementSectionSeats: decrementSectionSeats,
     // incrementSectionSeats: incrementSectionSeats,
