@@ -8,8 +8,10 @@ module.exports = function(app){
     app.put('/api/profile',updateProfile)
     app.post('/api/logout',logout)
     app.post('/api/login',login)
+    app.post('/api/user/follow/:userId',followUser)
 
     var userModel = require('../models/user/user.model.server')
+    var followModel = require('../models/follow/follow.model.server')
 
 
     function logout(req, res) {
@@ -45,6 +47,21 @@ module.exports = function(app){
         userModel.findUserById(id)
             .then(function (user) {
                 res.json(user);
+            })
+    }
+
+
+    function followUser(req, res) {
+        var followedUser = req.params['userId'];
+        var followedBy = req.session['currentUser'];
+
+        var follow = {
+            user : followedUser,
+            followedBy: followedBy._id
+        }
+        followModel.followUser(follow)
+            .then(function (fol) {
+                res.json(fol);
             })
     }
     
