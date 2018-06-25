@@ -9,10 +9,12 @@ module.exports = function(app){
     app.post('/api/book/:bookId/bookmark',bookmarkUserInBook)
     app.get('/api/reader/book', findBooksForReader)
     app.get('/api/book/author', findBookByAuthor)
+    app.get('/api/book/title/:title', findBookByTitle)
     app.get('/api/book/:bookId/review', findReviewsForBook)
     app.post('/api/:bookId/review', addReview)
     app.delete('/api/book/:bookId/delete', deleteBook)
     app.put('/api/book/:bookId/update', updateBook)
+
 
 
     // app.post('/api/section/:sectionId/enrollment',enrollStudentInSection)
@@ -96,6 +98,25 @@ module.exports = function(app){
 
     }
 
+
+
+    function findBookByTitle(req, res) {
+
+        var title = req.params['title'];
+
+
+        return  bookModel
+            .findBookByTitle(title)
+            .then(function (book) {
+                // if(!book) {
+                //    var bk = {
+                //        _id : 0
+                //    }
+                //     res.json(bk);
+                // }
+                res.json(book);
+            });
+    }
 
     function findBookByAuthor(req, res) {
 

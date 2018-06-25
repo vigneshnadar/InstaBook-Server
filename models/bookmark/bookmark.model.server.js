@@ -8,6 +8,7 @@ var bookmarkModel = mongoose.model('BookmarkModel',bookmarkSchema);
 
 
 function bookmarkUserInBook(bookmark) {
+    console.log('bookmark');
     console.log(bookmark);
     return bookmarkModel.create(bookmark);
 }

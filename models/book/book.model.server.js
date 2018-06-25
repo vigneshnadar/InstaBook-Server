@@ -21,6 +21,14 @@ function findBookByAuthor(authorId, isAdmin) {
 }
 
 
+function findBookByTitle(title) {
+
+
+    return bookModel.find({ name :title })
+    // return userModel.findById(userId);
+}
+
+
 function updateBook(bookId, book) {
     console.log(book);
     return bookModel.update({
@@ -80,7 +88,8 @@ var api ={
     createBook: createBook,
     findBookByAuthor: findBookByAuthor,
     removeBook: removeBook,
-    updateBook: updateBook
+    updateBook: updateBook,
+    findBookByTitle: findBookByTitle
     // findSectionsForCourse: findSectionsForCourse,
     // decrementSectionSeats: decrementSectionSeats,
     // incrementSectionSeats: incrementSectionSeats,
