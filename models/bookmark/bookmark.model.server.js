@@ -26,7 +26,9 @@ function findBooksForReader(readerId) {
 //     console.log(enrollment);
 //     return enrollmentModel.remove(enrollment);
 // }
-
+function removeBookmark(bookmark) {
+    return bookmarkModel.remove(bookmark);
+}
 
 // function findSectionsForCourse(courseId) {
 //     return sectionModel.find({courseId: courseId});
@@ -35,7 +37,8 @@ function findBooksForReader(readerId) {
 //
 var api ={
     bookmarkUserInBook: bookmarkUserInBook,
-    findBooksForReader: findBooksForReader
+    findBooksForReader: findBooksForReader,
+    removeBookmark: removeBookmark
     // enrollStudentInSection: enrollStudentInSection,
     // findSectionsForStudent: findSectionsForStudent,
     // unenrollStudentInSection: unenrollStudentInSection,

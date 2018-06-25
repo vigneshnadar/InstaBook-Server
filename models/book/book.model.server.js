@@ -10,9 +10,12 @@ function createBook(book) {
 }
 
 
-function findBookByAuthor(authorId) {
+function findBookByAuthor(authorId, isAdmin) {
     console.log('find by ids');
     // console.log(userModel.findOne({ _id :userId }));
+    if(isAdmin)
+        return bookModel.find()
+
     return bookModel.find({ author :authorId })
     // return userModel.findById(userId);
 }
@@ -64,12 +67,19 @@ function findBookByAuthor(authorId) {
 //
 // }
 
+function removeBook(bookId) {
+    return bookModel.remove({
+        _id : bookId
+    })
+}
+
 
 
 
 var api ={
     createBook: createBook,
-    findBookByAuthor: findBookByAuthor
+    findBookByAuthor: findBookByAuthor,
+    removeBook: removeBook
     // findSectionsForCourse: findSectionsForCourse,
     // decrementSectionSeats: decrementSectionSeats,
     // incrementSectionSeats: incrementSectionSeats,

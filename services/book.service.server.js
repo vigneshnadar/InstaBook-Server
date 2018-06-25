@@ -11,6 +11,7 @@ module.exports = function(app){
     app.get('/api/book/author', findBookByAuthor)
     app.get('/api/book/:bookId/review', findReviewsForBook)
     app.post('/api/:bookId/review', addReview)
+    app.delete('/api/book/:bookId/delete', deleteBook)
 
     // app.post('/api/section/:sectionId/enrollment',enrollStudentInSection)
 
@@ -34,6 +35,31 @@ module.exports = function(app){
                 // req.session['currentUser']= user;
                 res.json(book);
             })
+    }
+
+
+    function deleteBook(req, res) {
+        var bookId = req.params['bookId'];
+        var currentUser =   req.session.currentUser;
+        var userId = currentUser._id;
+        var bookmark = {
+            reader : userId,
+            book : bookId
+        };
+
+        // res.json(enrollment);
+
+        bookModel.removeBook(bookId)
+            .then(function () {
+                return  bookmarkModel
+                    .removeBookmark(bookmark)
+
+            })
+            .then(function (bkmk) {
+                res.json(bkmk);
+            })
+
+
     }
 
 
@@ -75,10 +101,14 @@ module.exports = function(app){
         console.log('currentUser');
         console.log(currentUser);
         var userId = currentUser._id;
+        var isAdmin = false;
+
+        if(currentUser.username === 'admin')
+            isAdmin = true;
 
 
         return  bookModel
-            .findBookByAuthor(userId)
+            .findBookByAuthor(userId, isAdmin)
             .then(function (books) {
                 res.json(books);
             });
