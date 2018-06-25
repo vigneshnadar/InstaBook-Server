@@ -21,14 +21,14 @@ function findBookByAuthor(authorId, isAdmin) {
 }
 
 
-// function editSection(sectionId,section) {
-//     console.log(section);
-//     return sectionModel.update({
-//         _id : sectionId
-//     },{
-//         $set: section
-//     })
-// }
+function updateBook(bookId, book) {
+    console.log(book);
+    return bookModel.update({
+        _id : bookId
+    },{
+        $set: book
+    })
+}
 //
 // function findSectionById(sectionId) {
 //     console.log('find by ids');
@@ -79,7 +79,8 @@ function removeBook(bookId) {
 var api ={
     createBook: createBook,
     findBookByAuthor: findBookByAuthor,
-    removeBook: removeBook
+    removeBook: removeBook,
+    updateBook: updateBook
     // findSectionsForCourse: findSectionsForCourse,
     // decrementSectionSeats: decrementSectionSeats,
     // incrementSectionSeats: incrementSectionSeats,

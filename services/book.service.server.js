@@ -12,6 +12,8 @@ module.exports = function(app){
     app.get('/api/book/:bookId/review', findReviewsForBook)
     app.post('/api/:bookId/review', addReview)
     app.delete('/api/book/:bookId/delete', deleteBook)
+    app.put('/api/book/:bookId/update', updateBook)
+
 
     // app.post('/api/section/:sectionId/enrollment',enrollStudentInSection)
 
@@ -123,6 +125,20 @@ module.exports = function(app){
             .then(function (rev) {
                 res.json(rev);
             });
+    }
+
+    function updateBook(req, res) {
+        var book = req.body;
+        var id = req.params['bookId'];
+
+        //res.send(user);
+
+        bookModel.updateBook(id,book)
+            .then(function (book) {
+                console.log("book is"+book);
+                // req.session['currentUser']= user;
+                res.json(book);
+            })
     }
 
 
