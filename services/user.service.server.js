@@ -3,6 +3,8 @@
 module.exports = function(app){
     app.get('/api/user',findAllUsers)
     app.get('/api/user/:userId',findUserById)
+    app.delete('/api/user/:userId/delete',deleteUserById)
+    app.post('/api/user/:userId/update',updateUser)
     app.post('/api/user',createUser)
     app.get('/api/profile',profile)
     app.put('/api/profile',updateProfile)
@@ -70,6 +72,17 @@ module.exports = function(app){
                 res.json(user);
             })
     }
+
+
+    function updateUser(req, res) {
+        var user = req.body;
+        var userId = req.params['userId'];
+        userModel.updateProfile(user,userId)
+            .then(function (user) {
+                // req.session['currentUser']=user;
+                res.json(user);
+            })
+    }
     
     function findUserById(req, res) {
         var id = req.params['userId'];
@@ -111,13 +124,20 @@ module.exports = function(app){
     
     function createUser(req, res) {
         var user = req.body;
+        var createdByAdmin = user.createdByAdmin;
+        console.log(createdByAdmin);
+        console.log(user);
 
         //res.send(user);
 
         userModel.createUser(user)
             .then(function (user) {
+                if(!createdByAdmin) {
+                    console.log('not created by admin');
+                    req.session['currentUser']= user;
+                }
                 console.log("status is"+user);
-                req.session['currentUser']= user;
+
                 res.send(user);
             })
     }
@@ -126,6 +146,14 @@ module.exports = function(app){
         userModel.findAllUsers()
             .then(function (users) {
                 res.send(users);
+            })
+    }
+
+    function deleteUserById(req, res) {
+        var id = req.params['userId'];
+        userModel.deleteUser(id)
+            .then(function (user) {
+                res.json(user);
             })
     }
 }

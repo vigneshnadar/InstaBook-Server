@@ -20,6 +20,11 @@ function updateProfile(user,userId) {
 }
 
 
+function deleteUser(userId) {
+    return userModel.remove({_id : userId});
+}
+
+
 function findAllUsers() {
     return userModel.find();
 }
@@ -44,7 +49,8 @@ var api ={
     findAllUsers: findAllUsers,
     findUserById: findUserById,
     findUserByCredentials: findUserByCredentials,
-    updateProfile: updateProfile
+    updateProfile: updateProfile,
+    deleteUser: deleteUser
 }
 
 
