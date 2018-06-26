@@ -9,7 +9,8 @@ var userSchema = mongoose.Schema({
     lastName: String,
     email: String,
     admin: Boolean,
-    createdByAdmin : Boolean
+    createdByAdmin : Boolean,
+    isauthor: Boolean
 },{ collection: 'user'});
 
 
