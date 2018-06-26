@@ -58,7 +58,18 @@ module.exports = function(app){
         userModel.findUserByCredentials(credentials)
             .then(function (user) {
                 req.session['currentUser']=user;
-                res.json(user);
+                var newUser = user;
+                console.log('user is');
+                console.log(user);
+
+                // res.json(user);
+                if(typeof req.session['currentUser'] === 'undefined'){
+                    newUser = {
+                        username : 'unregistered',
+                        password : 'unregistered'
+                    }
+                }
+                res.json(newUser);
             })
     }
 
